@@ -34,8 +34,6 @@ namespace ConsoleApp1
                 
                 foreach (var method in orderedMethods)
                 {
-                    dynamic result;
-                    
                     try
                     {
                         if (IsAsyncMethod(sample.Instance.GetType(), method))
@@ -60,15 +58,10 @@ namespace ConsoleApp1
             await Task.FromResult(new { });
         }
         
-        private static bool IsAsyncMethod(Type classType, MethodInfo method)
+        private static bool IsAsyncMethod(Type classType, MemberInfo method)
         {
-            // Obtain the method with the specified name.
-            // MethodInfo method = classType.GetMethod(methodName);
-
-            Type attType = typeof(AsyncStateMachineAttribute);
-
-            // Obtain the custom attribute for the method. 
-            // The value returned contains the StateMachineType property. 
+            var attType = typeof(AsyncStateMachineAttribute);
+            
             // Null is returned if the attribute isn't present for the method. 
             var attrib = (AsyncStateMachineAttribute)method.GetCustomAttribute(attType);
 
